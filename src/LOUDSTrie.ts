@@ -1,4 +1,4 @@
-import { binarySearchUint16 } from "./utils";
+import { binarySearch } from "./utils";
 import { BitVector } from "./BitVector";
 
 export class LOUDSTrie {
@@ -43,7 +43,7 @@ export class LOUDSTrie {
         const childStartBit = this.bitVector.select(firstChild, true);
         const childEndBit = this.bitVector.nextClearBit(childStartBit);
         const childSize = childEndBit - childStartBit;
-        const result = binarySearchUint16(this.edges, firstChild, firstChild + childSize, c);
+        const result = binarySearch(this.edges, firstChild, firstChild + childSize, c);
         return result >= 0 ? result : -1;
     }
 

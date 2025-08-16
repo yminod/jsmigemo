@@ -1,4 +1,4 @@
-import {binarySearchString} from "./utils";
+import {binarySearch} from "./utils";
 class SimpleDictionary {
     keys: string[];
     values: string[];
@@ -33,11 +33,11 @@ class SimpleDictionary {
     predictiveSearch(hiragana: string): string[] {
         if (hiragana.length > 0) {
             let stop = hiragana.substring(0, hiragana.length - 1) + String.fromCodePoint(hiragana.codePointAt(hiragana.length - 1)||0 + 1);
-            let startPos = binarySearchString(this.keys, 0, this.keys.length, hiragana);
+            let startPos = binarySearch(this.keys, 0, this.keys.length, hiragana);
             if (startPos < 0) {
                 startPos = -(startPos + 1);
             }
-            let endPos = binarySearchString(this.keys, 0, this.keys.length, stop);
+            let endPos = binarySearch(this.keys, 0, this.keys.length, stop);
             if (endPos < 0) {
                 endPos = -(endPos + 1);
             }
