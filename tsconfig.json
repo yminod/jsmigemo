@@ -9,7 +9,7 @@
 		"outDir": "lib",
 		"strict": true,
 		"sourceMap": true,
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"esModuleInterop": true,
 	},
 	"include": ["src/**/*.ts"],
