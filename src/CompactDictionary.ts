@@ -1,6 +1,7 @@
 import { LOUDSTrie } from "./LOUDSTrie";
 import { BitVector } from "./BitVector";
 import { BitList } from "./BitList";
+import { CompactHiraganaString } from "./CompactHiraganaString";
 
 export class CompactDictionary {
     keyTrie: LOUDSTrie;
@@ -65,26 +66,7 @@ export class CompactDictionary {
     }
 
     private static decode(c: number): number {
-        if (0x20 <= c && c <= 0x7e) {
-            return c;
-        }
-        if (0xa1 <= c && c <= 0xf6) {
-            return (c + 0x3040 - 0xa0);
-        }
-        throw new RangeError();
-    }
-
-    private static encode(c: number): number {
-        if (0x20 <= c && c <= 0x7e) {
-            return c;
-        }
-        if (0x3041 <= c && c <= 0x3096) {
-            return (c - 0x3040 + 0xa0);
-        }
-        if (0x30fc == c) {
-            return (c - 0x3040 + 0xa0);
-        }
-        throw new RangeError();
+        return CompactHiraganaString.decodeByte(c);
     }
 
     private static createHasMappingBitList(mappingBitVector: BitVector) {

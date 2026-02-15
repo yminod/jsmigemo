@@ -3,17 +3,23 @@ export class CompactHiraganaString {
     public static decodeBytes(bytes: Uint8Array): string {
         let result = "";
         for (let i = 0; i < bytes.length; i++) {
-            result += CompactHiraganaString.decodeByte(bytes[i]);
+            result += String.fromCharCode(CompactHiraganaString.decodeByte(bytes[i]));
         }
         return result;
     }
 
-    public static decodeByte(c: number): string {
+    public static decodeByte(c: number): number {
+        if (0x00 === c) {
+            return 0;
+        }
         if (0x20 <= c && c <= 0x7e) {
-            return String.fromCharCode(c);
+            return c;
         }
         if (0xa1 <= c && c <= 0xf6) {
-            return String.fromCharCode(c + 0x3040 - 0xa0);
+            return c + 0x3040 - 0xa0;
+        }
+        if (0xf7 === c) {
+            return 0x30fc;
         }
         throw new RangeError();
     }
@@ -27,7 +33,7 @@ export class CompactHiraganaString {
     }
 
     public static encodeChar(b: number): number {
-        if (b == 0) {
+        if (b === 0) {
             return 0;
         }
         if (0x20 <= b && b <= 0x7e) {
@@ -37,7 +43,7 @@ export class CompactHiraganaString {
             return b - 0x3040 + 0xa0;
         }
         if (0x30fc === b) {
-            return b - 0x3040 + 0xa0;
+            return 0xf7;
         }
         throw new RangeError('unknown character to encode: ' + b);
     }
