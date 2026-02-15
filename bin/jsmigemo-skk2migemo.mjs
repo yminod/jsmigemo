@@ -36,13 +36,13 @@ rl.on('line', (line)=>{
     }
     const haveNumber = key.match("#");
     if (key.match("[a-z]$") && !key.match("^[ -~]+$")) {
-        key = key.substr(0, key.length - 2); 
+        key = key.substring(0, key.length - 2); 
     }
     if (value.startsWith("/")) {
-        value = value.substr(1);
+        value = value.substring(1);
     }
     if (value.endsWith("/")) {
-        value = value.substr(0, value.length - 1);
+        value = value.substring(0, value.length - 1);
     }
     if (dict.has(key)) {
         dict.set(key, dict.get(key).concat(value.split("/")));

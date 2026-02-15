@@ -51,7 +51,7 @@
 				for (var i of list) {
 					let r = regex.exec(i);
 					if (r != null) {
-						todofuken.innerHTML += '<li class="list-group-item">' + i.substr(0, r.index) + "<span style='background: pink'>" + i.substr(r.index, r[0].length) + "</span>" + i.substr(r.index + r[0].length) + '</li>';
+						todofuken.innerHTML += '<li class="list-group-item">' + i.substring(0, r.index) + "<span style='background: pink'>" + i.substring(r.index, r[0].length) + "</span>" + i.substring(r.index + r[0].length) + '</li>';
 					}
 				}
 			}

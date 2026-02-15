@@ -13,8 +13,8 @@ class SimpleDictionary {
         for (let line of lines) {
             if (!line.startsWith(";") && line.length != 0) {
                 let semicolonPos = line.indexOf('\t');
-                let key = line.substr(0, semicolonPos);
-                let value = line.substr(semicolonPos + 1);
+                let key = line.substring(0, semicolonPos);
+                let value = line.substring(semicolonPos + 1);
                 keyValuePairs.push([key, value]);
             }
         }

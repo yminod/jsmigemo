@@ -30,7 +30,7 @@ export class RomajiProcessor2 implements RomajiProcessor {
         while (cursor < romaji.length) {
             let longestNode = -1;
             let length = -1;
-            for (let i of this.trie.commonPrefixSearch(romaji.substr(cursor))) {
+            for (let i of this.trie.commonPrefixSearch(romaji.substring(cursor))) {
                 if (this.remainList[i] != -1) {
                     longestNode = i;
                 }
@@ -53,7 +53,7 @@ export class RomajiProcessor2 implements RomajiProcessor {
         while (cursor < romaji.length) {
             let longestNode = -1;
             let length = 0;
-            for (let node of this.trie.commonPrefixSearch(romaji.substr(cursor))) {
+            for (let node of this.trie.commonPrefixSearch(romaji.substring(cursor))) {
                 if (this.remainList[node] != -1) {
                     longestNode = node;
                 }
@@ -61,7 +61,7 @@ export class RomajiProcessor2 implements RomajiProcessor {
             }
             if (length+cursor-1 == romaji.length) {
                 let set = new Set<string>();
-                for (let node of this.trie.predictiveSearch(romaji.substr(cursor))) {
+                for (let node of this.trie.predictiveSearch(romaji.substring(cursor))) {
                     if (this.remainList[node] != -1) {
                         set.add(this.hiraganaList[node]);
                     }
