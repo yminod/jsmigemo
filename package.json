@@ -27,7 +27,7 @@
     "migemo"
   ],
   "author": "oguna <5452619+oguna@users.noreply.github.com> (https://github.com/oguna)",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/oguna/jsmigemo.git"

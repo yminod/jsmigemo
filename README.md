@@ -115,8 +115,7 @@ queryメソッドはステートレスのため、複数のスレッドから同
 `<compact-dict-file>` は、出力ファイル名です。
 
 ## ライセンス
-本ライブラリに付属の辞書ファイルは、SKK辞書から生成されています。
-そのため、辞書ファイル `migemo-compact-dict` のライセンスはSKK辞書から継承しています。
-SKK辞書のライセンスについては、[SKK辞書配布ページ](http://openlab.ring.gr.jp/skk/wiki/wiki.cgi?page=SKK%BC%AD%BD%F1)をご覧ください。
+本ライブラリに付属の辞書ファイルは、MITライセンスのプロジェクトから生成されています。
+[yet-another-migemo-dict](https://github.com/oguna/yet-another-migemo-dict)
 
-`migemo-compact-dict` 以外のファイルについては、MIT LICENSEのもとで配布します。
+本プロジェクト配下のファイルは、MIT LICENSEのもとで配布します。
