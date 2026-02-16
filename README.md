@@ -19,7 +19,7 @@ $ npm install jsmigemo
 |:------:|---------|----------|
 | ESModule | jsmigemo.mjs | jsmigemo.min.mjs |
 | CommonJS | jsmigemo.cjs | jsmigemo.min.cjs |
-| IIFE | jsmigemo.js | jsmigemo.min.js |
+| IIFE | jsmigemo.iife.js | jsmigemo.min.iife.js |
 
 DefaultとMinifiedの違いは以下です。
 - Defaultは、ソースコードを1つにまとめただけの、変数名もそのまま残っているJSファイルです。開発時にはこちらをご利用ください。
