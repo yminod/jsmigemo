@@ -26,8 +26,8 @@ rl.on('line', (line)=>{
        return; 
     }
     const keyValues = line.split(' ', 2);
-    const key = keyValues[0];
-    const value = keyValues[1];
+    let key = keyValues[0];
+    let value = keyValues[1];
     if (key.startsWith("<") || key.startsWith(">") || key.startsWith("?")) {
         return;
     }
@@ -51,8 +51,8 @@ rl.on('line', (line)=>{
     }
 }).on('close', () => {
 let outputContent = "";
-for (const [k,v] of dict.entries()) {
-    v = [...new Set(v)];
+for (const [k, values] of dict.entries()) {
+    const v = [...new Set(values)];
     outputContent += k + "\t" + v.join("\t") + "\n";
 }
 fs.writeFileSync("a.txt", outputContent);
