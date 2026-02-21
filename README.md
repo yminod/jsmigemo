@@ -44,66 +44,73 @@ PATTERN: (kensaku|けんさく|ケンサク|建策|憲[作冊]|検索|献策|研
 ### Node.js
 
 ```js
-const migemo = require('jsmigemo');
-const path = require('path');
-const fs = require('fs');
+import { readFile } from "node:fs/promises";
+import { CompactDictionary, Migemo } from "jsmigemo";
 
-const buffer = fs.readFileSync('migemo-compact-dict');
-const dict = new migemo.CompactDictionary(buffer.buffer);
-const m = new migemo.Migemo();
-m.setDict(dict);
-console.log(m.query('kensaku'));
+const data = await readFile("migemo-compact-dict");
+const buffer = data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
+
+const dict = new CompactDictionary(buffer);
+const migemo = new Migemo();
+migemo.setDict(dict);
+
+console.log(migemo.query("kensaku"));
 //=> (kensaku|けんさく|ケンサク|建策|憲[作冊]|検索|献策|研削|羂索|ｋｅｎｓａｋｕ|ｹﾝｻｸ)
 ```
 
 ### Deno
 
 ```js
-import * as migemo from "https://cdn.jsdelivr.net/npm/jsmigemo/dist/jsmigemo.min.mjs";
+import { CompactDictionary, Migemo } from "https://cdn.jsdelivr.net/npm/jsmigemo/dist/jsmigemo.min.mjs";
 
 const data = await Deno.readFile("./migemo-compact-dict");
-const dict = new migemo.CompactDictionary(data.buffer);
-const m = new migemo.Migemo();
-m.setDict(dict);
-console.log(m.query("kensaku"));
+const dict = new CompactDictionary(data.buffer);
+const migemo = new Migemo();
+migemo.setDict(dict);
+
+console.log(migemo.query("kensaku"));
 //=> (kensaku|けんさく|ケンサク|建策|憲[作冊]|検索|献策|研削|羂索|ｋｅｎｓａｋｕ|ｹﾝｻｸ)
 ```
 
 ### Browser
 
-`jsmigemo.js` と `migemo-compact-dict` を本リポジトリから用意します。
-
-jsmigemoを使うHTMLに次のタグを追加し、`jsmigemo.js` を読み込みます。
-
 ```html
-<script type="text/javascript" src='jsmigemo.js'></script>
+<input id="queryInput" type="text" placeholder="kensaku">
+<pre id="regexOutput"></pre>
+
+<script src="https://cdn.jsdelivr.net/npm/jsmigemo/dist/jsmigemo.min.iife.js"></script>
+<script>
+  const DICT_URL = "https://cdn.jsdelivr.net/npm/jsmigemo/migemo-compact-dict";
+
+  const queryInput = document.getElementById("queryInput");
+  const regexOutput = document.getElementById("regexOutput");
+
+  let migemo = null;
+
+  async function setup() {
+    const response = await fetch(DICT_URL);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const buffer = await response.arrayBuffer();
+    const dict = new window.jsmigemo.CompactDictionary(buffer);
+    migemo = new window.jsmigemo.Migemo();
+    migemo.setDict(dict);
+  }
+
+  queryInput.addEventListener("input", () => {
+    if (!migemo) {
+      return;
+    }
+    regexOutput.textContent = migemo.query(queryInput.value.trim());
+  });
+
+  setup().catch((error) => {
+    regexOutput.textContent = `辞書の読み込みに失敗: ${error.message}`;
+  });
+</script>
 ```
-
-次に、scriptタグ内で、辞書ファイルをサーバから読み込みます。
-
-```js
-let cd;
-const req = new XMLHttpRequest();
-req.open("get", "migemo-compact-dict", true);
-req.responseType = "arraybuffer";
-req.onload = function () {
-	const ab = req.response;
-	cd = new jsmigemo.CompactDictionary(ab);
-}
-req.send(null);
-```
-
-読み込み完了後、migemoを初期化します。
-setDictメソッドで、先に読み込んだ辞書ファイルを指定します。
-queryメソッドで、検索したい単語をローマ字で引数に与えると、その単語にヒットする正規表現が返ります。
-
-```js
-const migemo = new jsmigemo.Migemo()
-migemo.setDict(cd);
-const rowregex = migemo.query(queryInputElement.value);
-```
-
-queryメソッドはステートレスのため、複数のスレッドから同時に呼び出すことができます。
 
 ## 辞書ファイルの生成
 
