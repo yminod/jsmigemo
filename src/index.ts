@@ -11,6 +11,5 @@ export * from "./Migemo";
 export * from './RomajiProcessor'
 export * from './RomajiProcessor1'
 export * from './RomajiProcessor2'
-export * from './SimpleDictionary'
 export * from './TernaryRegexGenerator'
 export * from './utils'
