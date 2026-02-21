@@ -147,7 +147,7 @@ export class BitVector {
     public toString() {
         let s = "";
         for (let i = 0; i < this.sizeInBits; i++) {
-            const bit = ((this.words[i >>> 6] >>> (i & 63)) & 1) == 1;
+            const bit = ((this.words[i >>> 5] >>> (i & 31)) & 1) == 1;
             s += bit ? '1' : '0';
             if ((i & 63) == 63) {
                 s += ' ';
