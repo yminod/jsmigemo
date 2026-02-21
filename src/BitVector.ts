@@ -28,7 +28,7 @@ export class BitVector {
     }
 
     rank(pos: number, b: boolean): number {
-        if (pos < 0 && this.sizeInBits <= pos) {
+        if (pos < 0 || this.sizeInBits + 1 < pos) {
             throw new RangeError();
         }
         let count1 = this.sb[pos >>> 6] + this.lb[pos >>> 9];
@@ -138,7 +138,7 @@ export class BitVector {
     }
 
     get(pos: number): boolean {
-        if (pos < 0 && this.sizeInBits <= pos) {
+        if (pos < 0 || this.sizeInBits < pos) {
             throw new RangeError();
         }
         return ((this.words[pos >>> 5] >>> (pos & 31)) & 1) == 1;
