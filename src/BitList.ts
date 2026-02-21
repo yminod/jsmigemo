@@ -11,18 +11,19 @@ export class BitList {
         }
     }
     add(value: boolean) {
-        if (this.words.length < (this.size + 1 + 31) >> 5) {
+        const pos = this.size;
+        if (this.words.length < (pos + 1 + 31) >> 5) {
             const newWords = new Uint32Array(this.words.length * 2);
             newWords.set(this.words, 0);
             this.words = newWords;
         }
-        this.set(this.size, value);
-        this.size++;
+        this.size = pos + 1;
+        this.set(pos, value);
     }
 
     set(pos: number, value: boolean) {
-        if (this.size < pos) {
-            throw new Error();
+        if (0 > pos || pos >= this.size) {
+            throw new RangeError();
         }
         if (value) {
             this.words[pos >> 5] |= 1 << (pos & 31);
@@ -32,8 +33,8 @@ export class BitList {
     }
 
     get(pos: number): boolean {
-        if (this.size < pos) {
-            throw new Error();
+        if (0 > pos || pos >= this.size) {
+            throw new RangeError();
         }
         return ((this.words[pos >> 5] >> (pos & 31)) & 1) == 1;
     }
