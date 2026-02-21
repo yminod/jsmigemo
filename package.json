@@ -1,6 +1,6 @@
 {
   "name": "jsmigemo",
-  "version": "0.5.1",
+  "version": "0.5.1-dev",
   "description": "migemo on javascript",
   "type": "module",
   "main": "./dist/jsmigemo.cjs",
